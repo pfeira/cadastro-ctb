@@ -6,7 +6,7 @@
     <title>Cadastro - Clube dos Tenistas da Bahia</title>
 
     <!-- Configuração para o WhatsApp / Redes Sociais -->
-    <meta property="og:title" content="Cadastro de Atletas - CTB" />
+    <meta property="og:title" content="Cadastro de Associado - CTB" />
     <meta property="og:description" content="Faça seu cadastro de associado no Clube dos Tenistas da Bahia. Válido para Tênis de Mesa, Tênis de Quadra e Beach Tennis." />
     <meta property="og:image" content="https://pfeira.github.io/cadastro-ctb/logoctb-alta.png" />
     <meta property="og:url" content="https://pfeira.github.io/cadastro-ctb/" />
@@ -46,107 +46,269 @@
         }
     </script>
 </head>
-<body class="bg-gray-50 min-h-screen text-ctbNavy font-sans flex items-center justify-center p-4">
+<body class="bg-gray-50 min-h-screen text-ctbNavy font-sans flex items-center justify-center p-2 md:p-4">
 
-    <div class="bg-white max-w-lg w-full rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 hover:shadow-2xl">
+    <div class="bg-white max-w-2xl w-full rounded-2xl shadow-xl overflow-hidden my-4">
         <!-- Cabeçalho -->
         <div class="bg-ctbNavy p-6 text-center rounded-b-3xl shadow-md">
-            <img src="logoctb-alta.png" alt="Logomarca CTB" class="mx-auto h-28 object-contain mb-4 drop-shadow-md transition-transform duration-300 hover:scale-105">
+            <img src="logoctb-alta.png" alt="Logomarca CTB" class="mx-auto h-28 object-contain mb-4 drop-shadow-md">
             <h1 class="text-2xl font-extrabold text-white">Cadastro de Associado</h1>
-            <p class="text-ctbGreenLight mt-1 font-semibold text-sm">Junte-se à nossa equipa</p>
+            <p class="text-ctbGreenLight mt-1 font-semibold text-sm">Faça parte do Clube dos Tenistas da Bahia</p>
         </div>
 
         <!-- Formulário integrado ao FormSubmit -->
-        <form id="cadastroForm" action="https://formsubmit.co/pfeira@gmail.com" method="POST" class="p-6 space-y-6">
+        <form id="cadastroForm" action="https://formsubmit.co/pfeira@gmail.com" method="POST" class="p-6 space-y-8">
             
             <!-- Configurações Ocultas do FormSubmit -->
-            <input type="hidden" name="_subject" value="Novo Cadastro de Atleta - CTB">
+            <input type="hidden" name="_subject" value="Novo Cadastro de Associado - CTB">
             <input type="hidden" name="_template" value="table">
-            <!-- Redireciona o atleta de volta para o app após o envio -->
             <input type="hidden" name="_next" value="https://pfeira.github.io/cadastro-ctb/">
 
-            <!-- Modalidade Esportiva -->
-            <div>
-                <label class="block text-sm font-bold text-ctbNavy mb-2"><i class="fa-solid fa-medal mr-2 text-ctbGreenDark"></i>Modalidade Principal</label>
-                <select name="modalidade" id="modalidade" required class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-ctbGreenDark focus:border-transparent outline-none transition-all shadow-sm appearance-none bg-gray-50">
-                    <option value="" disabled selected>Selecione o seu desporto...</option>
-                    <option value="Tênis de Mesa">Tênis de Mesa</option>
-                    <option value="Tênis de Quadra">Tênis de Quadra</option>
-                    <option value="Beach Tennis">Beach Tennis</option>
-                </select>
-            </div>
+            <!-- 1. DADOS PESSOAIS -->
+            <section>
+                <h2 class="text-lg font-bold text-ctbNavy border-b-2 border-ctbGreenLight pb-2 mb-4 flex items-center">
+                    <i class="fa-solid fa-address-card mr-2 text-ctbGreenDark"></i> Dados Pessoais
+                </h2>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-bold text-ctbNavy mb-2">Nome Completo *</label>
+                        <input type="text" name="nome" id="nome" required minlength="3" placeholder="Digite o seu nome completo" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-ctbGreenDark focus:border-transparent outline-none transition-all bg-gray-50">
+                    </div>
 
-            <!-- Nome Completo -->
-            <div>
-                <label class="block text-sm font-bold text-ctbNavy mb-2"><i class="fa-solid fa-user mr-2 text-ctbGreenDark"></i>Nome Completo</label>
-                <input type="text" name="nome" id="nome" required placeholder="Digite o seu nome completo" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-ctbGreenDark focus:border-transparent outline-none transition-all shadow-sm bg-gray-50">
-            </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-bold text-ctbNavy mb-2">CPF</label>
+                            <input type="text" name="cpf" id="cpf" placeholder="000.000.000-00" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-ctbGreenDark focus:border-transparent outline-none transition-all bg-gray-50">
+                            <p class="text-xs text-red-500 hidden mt-1" id="cpfError">CPF inválido</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-ctbNavy mb-2">Data de Nascimento *</label>
+                            <input type="date" name="nascimento" id="nascimento" required class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-ctbGreenDark focus:border-transparent outline-none transition-all bg-gray-50 text-gray-700">
+                        </div>
+                    </div>
 
-            <!-- E-mail e WhatsApp (Novos Campos) -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-sm font-bold text-ctbNavy mb-2"><i class="fa-solid fa-envelope mr-2 text-ctbGreenDark"></i>E-mail</label>
-                    <input type="email" name="email" id="email" required placeholder="seu.email@exemplo.com" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-ctbGreenDark focus:border-transparent outline-none transition-all shadow-sm bg-gray-50">
-                </div>
-                <div>
-                    <label class="block text-sm font-bold text-ctbNavy mb-2"><i class="fa-brands fa-whatsapp mr-2 text-ctbGreenDark"></i>WhatsApp</label>
-                    <input type="tel" name="whatsapp" id="whatsapp" required placeholder="(71) 99999-9999" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-ctbGreenDark focus:border-transparent outline-none transition-all shadow-sm bg-gray-50">
-                </div>
-            </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-bold text-ctbNavy mb-2">E-mail *</label>
+                            <input type="email" name="email" id="email" required placeholder="seu.email@exemplo.com" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-ctbGreenDark focus:border-transparent outline-none transition-all bg-gray-50">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-ctbNavy mb-2">WhatsApp *</label>
+                            <input type="tel" name="whatsapp" id="whatsapp" required placeholder="(71) 99999-9999" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-ctbGreenDark focus:border-transparent outline-none transition-all bg-gray-50">
+                        </div>
+                    </div>
 
-            <!-- Data de Nascimento -->
-            <div>
-                <label class="block text-sm font-bold text-ctbNavy mb-2"><i class="fa-solid fa-calendar-days mr-2 text-ctbGreenDark"></i>Data de Nascimento</label>
-                <input type="date" name="nascimento" id="nascimento" required class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-ctbGreenDark focus:border-transparent outline-none transition-all shadow-sm bg-gray-50 text-gray-700">
-            </div>
+                    <!-- Menor de Idade -->
+                    <div class="bg-gray-100 p-4 rounded-lg mt-4 border border-gray-200">
+                        <label class="block text-sm font-bold text-ctbNavy mb-2">O associado é menor de 18 anos? *</label>
+                        <div class="flex space-x-6">
+                            <label class="flex items-center cursor-pointer">
+                                <input type="radio" name="menor_idade" value="Sim" class="mr-2 w-4 h-4 text-ctbGreenDark focus:ring-ctbGreenDark" required> Sim
+                            </label>
+                            <label class="flex items-center cursor-pointer">
+                                <input type="radio" name="menor_idade" value="Não" class="mr-2 w-4 h-4 text-ctbGreenDark focus:ring-ctbGreenDark" required> Não
+                            </label>
+                        </div>
+                    </div>
 
-            <!-- Tamanho da Camisa -->
-            <div>
-                <label class="block text-sm font-bold text-ctbNavy mb-2"><i class="fa-solid fa-shirt mr-2 text-ctbGreenDark"></i>Tamanho da Camisa</label>
-                <div class="grid grid-cols-3 md:grid-cols-6 gap-2">
-                    <div>
-                        <input type="radio" id="camisaPP" name="camisa" value="PP" class="hidden peer" required>
-                        <label for="camisaPP" class="flex items-center justify-center w-full h-12 border-2 border-gray-200 rounded-lg cursor-pointer font-bold text-gray-500 hover:bg-gray-50 peer-checked:bg-ctbNavy peer-checked:text-ctbGreenLight peer-checked:border-ctbNavy transition-all">PP</label>
-                    </div>
-                    <div>
-                        <input type="radio" id="camisaP" name="camisa" value="P" class="hidden peer">
-                        <label for="camisaP" class="flex items-center justify-center w-full h-12 border-2 border-gray-200 rounded-lg cursor-pointer font-bold text-gray-500 hover:bg-gray-50 peer-checked:bg-ctbNavy peer-checked:text-ctbGreenLight peer-checked:border-ctbNavy transition-all">P</label>
-                    </div>
-                    <div>
-                        <input type="radio" id="camisaM" name="camisa" value="M" class="hidden peer">
-                        <label for="camisaM" class="flex items-center justify-center w-full h-12 border-2 border-gray-200 rounded-lg cursor-pointer font-bold text-gray-500 hover:bg-gray-50 peer-checked:bg-ctbNavy peer-checked:text-ctbGreenLight peer-checked:border-ctbNavy transition-all">M</label>
-                    </div>
-                    <div>
-                        <input type="radio" id="camisaG" name="camisa" value="G" class="hidden peer">
-                        <label for="camisaG" class="flex items-center justify-center w-full h-12 border-2 border-gray-200 rounded-lg cursor-pointer font-bold text-gray-500 hover:bg-gray-50 peer-checked:bg-ctbNavy peer-checked:text-ctbGreenLight peer-checked:border-ctbNavy transition-all">G</label>
-                    </div>
-                    <div>
-                        <input type="radio" id="camisaGG" name="camisa" value="GG" class="hidden peer">
-                        <label for="camisaGG" class="flex items-center justify-center w-full h-12 border-2 border-gray-200 rounded-lg cursor-pointer font-bold text-gray-500 hover:bg-gray-50 peer-checked:bg-ctbNavy peer-checked:text-ctbGreenLight peer-checked:border-ctbNavy transition-all">GG</label>
-                    </div>
-                    <div>
-                        <input type="radio" id="camisaEXG" name="camisa" value="EXG" class="hidden peer">
-                        <label for="camisaEXG" class="flex items-center justify-center w-full h-12 border-2 border-gray-200 rounded-lg cursor-pointer font-bold text-gray-500 hover:bg-gray-50 peer-checked:bg-ctbNavy peer-checked:text-ctbGreenLight peer-checked:border-ctbNavy transition-all text-sm">EXG</label>
+                    <!-- Bloco Responsável (Oculto por padrão) -->
+                    <div id="blocoResponsavel" class="hidden bg-blue-50 p-4 rounded-lg border border-blue-100 space-y-4">
+                        <h3 class="font-bold text-ctbNavy text-sm"><i class="fa-solid fa-user-shield mr-2"></i>Dados do Responsável (Obrigatório)</h3>
+                        <div>
+                            <label class="block text-xs font-bold text-ctbNavy mb-1">Nome do Responsável *</label>
+                            <input type="text" name="responsavel_nome" id="responsavel_nome" placeholder="Nome completo do responsável" class="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-ctbGreenDark outline-none bg-white">
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-ctbNavy mb-1">CPF do Responsável *</label>
+                                <input type="text" name="responsavel_cpf" id="responsavel_cpf" placeholder="000.000.000-00" class="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-ctbGreenDark outline-none bg-white">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-ctbNavy mb-1">WhatsApp do Responsável *</label>
+                                <input type="tel" name="responsavel_whatsapp" id="responsavel_whatsapp" placeholder="(71) 99999-9999" class="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-ctbGreenDark outline-none bg-white">
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <!-- Ranking e Rating -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-sm font-bold text-ctbNavy mb-2"><i class="fa-solid fa-trophy mr-2 text-ctbGreenDark"></i>Ranking</label>
-                    <input type="text" name="ranking" id="ranking" maxlength="50" placeholder="Ex: 1º Baiano" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-ctbGreenDark focus:border-transparent outline-none transition-all shadow-sm bg-gray-50">
-                    <p class="text-xs text-gray-400 mt-1">Máx. 50 caracteres</p>
+            <!-- 2. PERFIL NO CTB -->
+            <section>
+                <h2 class="text-lg font-bold text-ctbNavy border-b-2 border-ctbGreenLight pb-2 mb-4 flex items-center">
+                    <i class="fa-solid fa-users mr-2 text-ctbGreenDark"></i> Perfil no CTB
+                </h2>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-bold text-ctbNavy mb-2">Tipo de Associado *</label>
+                        <select name="tipo_associado" id="tipo_associado" required class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-ctbGreenDark outline-none transition-all appearance-none bg-gray-50">
+                            <option value="" disabled selected>Selecione o perfil...</option>
+                            <option value="Atleta">Atleta</option>
+                            <option value="Aluno">Aluno</option>
+                            <option value="Professor/Técnico">Professor/Técnico</option>
+                            <option value="Responsável por atleta/aluno">Responsável por atleta/aluno</option>
+                            <option value="Associado">Associado</option>
+                            <option value="Dirigente">Dirigente</option>
+                            <option value="Voluntário">Voluntário</option>
+                            <option value="Parceiro/Apoiador">Parceiro/Apoiador</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-bold text-ctbNavy mb-2">Modalidade Principal *</label>
+                            <select name="modalidade" id="modalidade" required class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-ctbGreenDark outline-none transition-all appearance-none bg-gray-50">
+                                <option value="" disabled selected>Selecione a modalidade...</option>
+                                <option value="Tênis de Mesa">Tênis de Mesa</option>
+                                <option value="Tênis de Quadra">Tênis de Quadra</option>
+                                <option value="Beach Tennis">Beach Tennis</option>
+                                <option value="Outra">Outra</option>
+                                <option value="Não pratico esporte">Não pratico esporte</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-ctbNavy mb-2">Nível Esportivo *</label>
+                            <select name="nivel_esportivo" id="nivel_esportivo" required class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-ctbGreenDark outline-none transition-all appearance-none bg-gray-50">
+                                <option value="" disabled selected>Selecione o nível...</option>
+                                <option value="Iniciante">Iniciante</option>
+                                <option value="Intermediário">Intermediário</option>
+                                <option value="Avançado">Avançado</option>
+                                <option value="Competição">Competição</option>
+                                <option value="Não se aplica">Não se aplica</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <label class="block text-sm font-bold text-ctbNavy mb-2"><i class="fa-solid fa-star mr-2 text-ctbGreenDark"></i>Rating</label>
-                    <input type="text" name="rating" id="rating" maxlength="50" placeholder="Ex: Classe A" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-ctbGreenDark focus:border-transparent outline-none transition-all shadow-sm bg-gray-50">
-                    <p class="text-xs text-gray-400 mt-1">Máx. 50 caracteres</p>
+            </section>
+
+            <!-- 3. INFORMAÇÕES ESPORTIVAS -->
+            <section>
+                <h2 class="text-lg font-bold text-ctbNavy border-b-2 border-ctbGreenLight pb-2 mb-4 flex items-center">
+                    <i class="fa-solid fa-trophy mr-2 text-ctbGreenDark"></i> Informações Esportivas <span class="text-xs font-normal text-gray-500 ml-2">(Opcional)</span>
+                </h2>
+                
+                <div class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-bold text-ctbNavy mb-2">Ranking</label>
+                            <input type="text" name="ranking" id="ranking" maxlength="50" placeholder="Ex: Ranking Baiano, Brasileiro ou outro" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-ctbGreenDark outline-none transition-all bg-gray-50">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-ctbNavy mb-2">Classe / Rating</label>
+                            <input type="text" name="rating" id="rating" maxlength="50" placeholder="Ex: Classe A, Rating etc." class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-ctbGreenDark outline-none transition-all bg-gray-50">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold text-ctbNavy mb-2">Tamanho da Camisa</label>
+                        <div class="grid grid-cols-3 md:grid-cols-6 gap-2">
+                            <div>
+                                <input type="radio" id="camisaPP" name="camisa" value="PP" class="hidden peer">
+                                <label for="camisaPP" class="flex items-center justify-center w-full h-12 border-2 border-gray-200 rounded-lg cursor-pointer font-bold text-gray-500 hover:bg-gray-50 peer-checked:bg-ctbNavy peer-checked:text-ctbGreenLight peer-checked:border-ctbNavy transition-all">PP</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="camisaP" name="camisa" value="P" class="hidden peer">
+                                <label for="camisaP" class="flex items-center justify-center w-full h-12 border-2 border-gray-200 rounded-lg cursor-pointer font-bold text-gray-500 hover:bg-gray-50 peer-checked:bg-ctbNavy peer-checked:text-ctbGreenLight peer-checked:border-ctbNavy transition-all">P</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="camisaM" name="camisa" value="M" class="hidden peer">
+                                <label for="camisaM" class="flex items-center justify-center w-full h-12 border-2 border-gray-200 rounded-lg cursor-pointer font-bold text-gray-500 hover:bg-gray-50 peer-checked:bg-ctbNavy peer-checked:text-ctbGreenLight peer-checked:border-ctbNavy transition-all">M</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="camisaG" name="camisa" value="G" class="hidden peer">
+                                <label for="camisaG" class="flex items-center justify-center w-full h-12 border-2 border-gray-200 rounded-lg cursor-pointer font-bold text-gray-500 hover:bg-gray-50 peer-checked:bg-ctbNavy peer-checked:text-ctbGreenLight peer-checked:border-ctbNavy transition-all">G</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="camisaGG" name="camisa" value="GG" class="hidden peer">
+                                <label for="camisaGG" class="flex items-center justify-center w-full h-12 border-2 border-gray-200 rounded-lg cursor-pointer font-bold text-gray-500 hover:bg-gray-50 peer-checked:bg-ctbNavy peer-checked:text-ctbGreenLight peer-checked:border-ctbNavy transition-all">GG</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="camisaEXG" name="camisa" value="EXG" class="hidden peer">
+                                <label for="camisaEXG" class="flex items-center justify-center w-full h-12 border-2 border-gray-200 rounded-lg cursor-pointer font-bold text-gray-500 hover:bg-gray-50 peer-checked:bg-ctbNavy peer-checked:text-ctbGreenLight peer-checked:border-ctbNavy transition-all text-sm">EXG</label>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-2">Informe apenas se aplicável ao seu cadastro ou participação em atividades do CTB.</p>
+                    </div>
                 </div>
-            </div>
+            </section>
+
+            <!-- 4. LOCALIZAÇÃO -->
+            <section>
+                <h2 class="text-lg font-bold text-ctbNavy border-b-2 border-ctbGreenLight pb-2 mb-4 flex items-center">
+                    <i class="fa-solid fa-map-location-dot mr-2 text-ctbGreenDark"></i> Localização
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-bold text-ctbNavy mb-2">Cidade *</label>
+                        <input type="text" name="cidade" id="cidade" required placeholder="Digite sua cidade" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-ctbGreenDark outline-none transition-all bg-gray-50">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-ctbNavy mb-2">Bairro</label>
+                        <input type="text" name="bairro" id="bairro" placeholder="Digite seu bairro" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-ctbGreenDark outline-none transition-all bg-gray-50">
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. PARTICIPAÇÃO -->
+            <section>
+                <h2 class="text-lg font-bold text-ctbNavy border-b-2 border-ctbGreenLight pb-2 mb-4 flex items-center">
+                    <i class="fa-solid fa-handshake mr-2 text-ctbGreenDark"></i> Participação
+                </h2>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-bold text-ctbNavy mb-2">Como você conheceu o CTB?</label>
+                        <select name="como_conheceu" id="como_conheceu" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-ctbGreenDark outline-none transition-all appearance-none bg-gray-50">
+                            <option value="" disabled selected>Selecione uma opção...</option>
+                            <option value="Projeto social">Projeto social</option>
+                            <option value="Escola">Escola</option>
+                            <option value="Torneio">Torneio</option>
+                            <option value="Instagram">Instagram</option>
+                            <option value="WhatsApp">WhatsApp</option>
+                            <option value="Site">Site</option>
+                            <option value="Indicação">Indicação</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold text-ctbNavy mb-3">Quero participar de:</label>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-gray-700">
+                            <label class="flex items-center cursor-pointer hover:bg-gray-50 p-1 rounded"><input type="checkbox" name="interesses_ctb" value="Treinamentos" class="mr-3 w-4 h-4 text-ctbGreenDark rounded focus:ring-ctbGreenDark"> Treinamentos</label>
+                            <label class="flex items-center cursor-pointer hover:bg-gray-50 p-1 rounded"><input type="checkbox" name="interesses_ctb" value="Torneios e competições" class="mr-3 w-4 h-4 text-ctbGreenDark rounded focus:ring-ctbGreenDark"> Torneios e competições</label>
+                            <label class="flex items-center cursor-pointer hover:bg-gray-50 p-1 rounded"><input type="checkbox" name="interesses_ctb" value="Projetos sociais" class="mr-3 w-4 h-4 text-ctbGreenDark rounded focus:ring-ctbGreenDark"> Projetos sociais</label>
+                            <label class="flex items-center cursor-pointer hover:bg-gray-50 p-1 rounded"><input type="checkbox" name="interesses_ctb" value="Eventos do CTB" class="mr-3 w-4 h-4 text-ctbGreenDark rounded focus:ring-ctbGreenDark"> Eventos do CTB</label>
+                            <label class="flex items-center cursor-pointer hover:bg-gray-50 p-1 rounded"><input type="checkbox" name="interesses_ctb" value="Equipes CTB" class="mr-3 w-4 h-4 text-ctbGreenDark rounded focus:ring-ctbGreenDark"> Equipes CTB</label>
+                            <label class="flex items-center cursor-pointer hover:bg-gray-50 p-1 rounded"><input type="checkbox" name="interesses_ctb" value="Ações como voluntário" class="mr-3 w-4 h-4 text-ctbGreenDark rounded focus:ring-ctbGreenDark"> Ações como voluntário</label>
+                            <label class="flex items-center cursor-pointer hover:bg-gray-50 p-1 rounded"><input type="checkbox" name="interesses_ctb" value="Apoio a projetos" class="mr-3 w-4 h-4 text-ctbGreenDark rounded focus:ring-ctbGreenDark"> Apoio a projetos</label>
+                            <label class="flex items-center cursor-pointer hover:bg-gray-50 p-1 rounded"><input type="checkbox" name="interesses_ctb" value="Parcerias" class="mr-3 w-4 h-4 text-ctbGreenDark rounded focus:ring-ctbGreenDark"> Parcerias</label>
+                            <label class="flex items-center cursor-pointer hover:bg-gray-50 p-1 rounded"><input type="checkbox" name="interesses_ctb" value="Outras atividades" class="mr-3 w-4 h-4 text-ctbGreenDark rounded focus:ring-ctbGreenDark"> Outras atividades</label>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6. AUTORIZAÇÕES -->
+            <section class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-4">
+                <h2 class="text-lg font-bold text-ctbNavy pb-1 flex items-center">
+                    <i class="fa-solid fa-shield-halved mr-2 text-ctbGreenDark"></i> Autorizações
+                </h2>
+                
+                <label class="flex items-start cursor-pointer text-sm text-gray-700">
+                    <input type="checkbox" name="autorizacao_comunicacao" value="Sim" class="mr-3 mt-1 w-5 h-5 text-ctbGreenDark rounded focus:ring-ctbGreenDark shrink-0">
+                    <span>Quero receber informações do CTB por WhatsApp e e-mail.</span>
+                </label>
+
+                <label class="flex items-start cursor-pointer text-sm text-gray-700">
+                    <input type="checkbox" name="declaracao_cadastro" value="Sim" required class="mr-3 mt-1 w-5 h-5 text-ctbGreenDark rounded focus:ring-ctbGreenDark shrink-0">
+                    <span>Declaro que as informações fornecidas são verdadeiras e autorizo o CTB a utilizá-las para fins de cadastro, gestão associativa e comunicação relacionada às atividades do clube. *</span>
+                </label>
+            </section>
 
             <!-- Botão Enviar -->
-            <button type="submit" id="btnSubmit" class="w-full bg-ctbGreenDark hover:bg-ctbNavy text-white font-extrabold text-lg py-4 rounded-xl shadow-lg transform transition-all duration-300 hover:-translate-y-1 mt-4">
+            <button type="submit" id="btnSubmit" class="w-full bg-ctbGreenDark hover:bg-ctbNavy text-white font-extrabold text-lg py-4 rounded-xl shadow-lg transform transition-all duration-300 hover:-translate-y-1 mt-6">
                 <i class="fa-solid fa-paper-plane mr-2"></i> Enviar Cadastro
             </button>
         </form>
@@ -154,37 +316,161 @@
 
     <script>
         const form = document.getElementById('cadastroForm');
+        const cpfInput = document.getElementById('cpf');
+        const whatsappInput = document.getElementById('whatsapp');
+        const respCpfInput = document.getElementById('responsavel_cpf');
+        const respWhatsappInput = document.getElementById('responsavel_whatsapp');
+        const dtNascimento = document.getElementById('nascimento');
+        const blocoResponsavel = document.getElementById('blocoResponsavel');
+        const btnSubmit = document.getElementById('btnSubmit');
 
-        // 1. Guardar os dados localmente enquanto o atleta preenche
-        form.addEventListener('input', function() {
-            const formData = new FormData(form);
-            const dataObj = Object.fromEntries(formData.entries());
-            localStorage.setItem('cadastroCTB', JSON.stringify(dataObj));
+        // Limita a data de nascimento para não permitir datas futuras
+        dtNascimento.max = new Date().toISOString().split("T")[0];
+
+        // --- Máscaras ---
+        function mascaraCPF(v) {
+            v = v.replace(/\D/g, "");
+            v = v.replace(/(\d{3})(\d)/, "$1.$2");
+            v = v.replace(/(\d{3})(\d)/, "$1.$2");
+            v = v.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+            return v;
+        }
+
+        function mascaraTel(v) {
+            v = v.replace(/\D/g, "");
+            v = v.replace(/^(\d{2})(\d)/g, "($1) $2");
+            v = v.replace(/(\d)(\d{4})$/, "$1-$2");
+            return v;
+        }
+
+        cpfInput.addEventListener('input', e => { e.target.value = mascaraCPF(e.target.value); });
+        respCpfInput.addEventListener('input', e => { e.target.value = mascaraCPF(e.target.value); });
+        whatsappInput.addEventListener('input', e => { e.target.value = mascaraTel(e.target.value); });
+        respWhatsappInput.addEventListener('input', e => { e.target.value = mascaraTel(e.target.value); });
+
+        // --- Validação Básica CPF ---
+        function validarCPF(cpf) {
+            cpf = cpf.replace(/\D/g, '');
+            if(cpf === '') return true; // Deixa passar se vazio (opcional)
+            if(cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) return false;
+            return true;
+        }
+
+        // --- Lógica Menor de Idade ---
+        function calcularIdadeEAtualizarResponsavel() {
+            if(!dtNascimento.value) return;
+            const hoje = new Date();
+            const nasc = new Date(dtNascimento.value);
+            let idade = hoje.getFullYear() - nasc.getFullYear();
+            const m = hoje.getMonth() - nasc.getMonth();
+            if (m < 0 || (m === 0 && hoje.getDate() < nasc.getDate())) {
+                idade--;
+            }
+            
+            const radioSim = document.querySelector('input[name="menor_idade"][value="Sim"]');
+            const radioNao = document.querySelector('input[name="menor_idade"][value="Não"]');
+
+            if (idade < 18) {
+                radioSim.checked = true;
+                toggleResponsavel(true);
+            } else {
+                radioNao.checked = true;
+                toggleResponsavel(false);
+            }
+        }
+
+        function toggleResponsavel(isMenor) {
+            const inputs = blocoResponsavel.querySelectorAll('input');
+            if (isMenor) {
+                blocoResponsavel.classList.remove('hidden');
+                inputs.forEach(i => i.required = true);
+            } else {
+                blocoResponsavel.classList.add('hidden');
+                inputs.forEach(i => {
+                    i.required = false;
+                    i.value = ''; // Limpa dados se mudar de ideia
+                });
+            }
+        }
+
+        dtNascimento.addEventListener('change', calcularIdadeEAtualizarResponsavel);
+        
+        document.querySelectorAll('input[name="menor_idade"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                toggleResponsavel(e.target.value === 'Sim');
+            });
         });
 
-        // 2. Restaurar os dados caso a página seja fechada acidentalmente
+        // --- LocalStorage Lógica Aprimorada ---
+        function saveToLocal() {
+            const formData = new FormData(form);
+            const dataObj = {};
+            for (let [key, value] of formData.entries()) {
+                if (dataObj[key]) {
+                    if (!Array.isArray(dataObj[key])) {
+                        dataObj[key] = [dataObj[key]];
+                    }
+                    dataObj[key].push(value);
+                } else {
+                    dataObj[key] = value;
+                }
+            }
+            localStorage.setItem('cadastroCTB', JSON.stringify(dataObj));
+        }
+
+        form.addEventListener('input', saveToLocal);
+        form.addEventListener('change', saveToLocal);
+
         window.addEventListener('load', function() {
             const savedData = localStorage.getItem('cadastroCTB');
             if(savedData) {
                 const dataObj = JSON.parse(savedData);
                 for (const key in dataObj) {
-                    const field = form.elements[key];
-                    if (field) {
-                        if (field.type === 'radio') {
-                            const radioBtn = document.querySelector(`input[name="${key}"][value="${dataObj[key]}"]`);
-                            if(radioBtn) radioBtn.checked = true;
-                        } else {
-                            field.value = dataObj[key];
+                    const values = Array.isArray(dataObj[key]) ? dataObj[key] : [dataObj[key]];
+                    values.forEach(val => {
+                        const field = form.elements[key];
+                        if (field) {
+                            if (field.type === 'radio' || (field.length && field[0].type === 'radio')) {
+                                const radioBtn = document.querySelector(`input[name="${key}"][value="${val}"]`);
+                                if(radioBtn) radioBtn.checked = true;
+                            } else if (field.type === 'checkbox' || (field.length && field[0].type === 'checkbox')) {
+                                const checkBtn = document.querySelector(`input[name="${key}"][value="${val}"]`);
+                                if(checkBtn) checkBtn.checked = true;
+                            } else {
+                                field.value = val;
+                            }
                         }
-                    }
+                    });
                 }
+                // Refaz a lógica de interface baseada nos dados restaurados
+                if(dtNascimento.value) calcularIdadeEAtualizarResponsavel();
+                const menorSalvo = document.querySelector('input[name="menor_idade"]:checked');
+                if(menorSalvo) toggleResponsavel(menorSalvo.value === 'Sim');
             }
         });
 
-        // 3. Limpar a memória local apenas no momento em que o formulário for submetido
-        form.addEventListener('submit', function() {
-            const btnSubmit = document.getElementById('btnSubmit');
-            btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> A processar...';
+        // --- Validação no Envio ---
+        form.addEventListener('submit', function(e) {
+            const cpfVal = cpfInput.value;
+            const errorLabel = document.getElementById('cpfError');
+            
+            if (cpfVal && !validarCPF(cpfVal)) {
+                e.preventDefault();
+                errorLabel.classList.remove('hidden');
+                cpfInput.classList.add('border-red-500');
+                cpfInput.focus();
+                return;
+            }
+            
+            errorLabel.classList.add('hidden');
+            cpfInput.classList.remove('border-red-500');
+
+            // Feedback visual no botão
+            btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Enviando cadastro...';
+            btnSubmit.classList.add('opacity-75', 'cursor-not-allowed');
+            // Não podemos dar disabled=true senão o form não submete nativamente, 
+            // mas podemos mudar o estilo para desencorajar múltiplos cliques.
+            
             localStorage.removeItem('cadastroCTB');
         });
     </script>
