@@ -53,17 +53,23 @@
         <div class="bg-ctbNavy p-6 text-center rounded-b-3xl shadow-md">
             <img src="logoctb-alta.png" alt="Logomarca CTB" class="mx-auto h-28 object-contain mb-4 drop-shadow-md transition-transform duration-300 hover:scale-105">
             <h1 class="text-2xl font-extrabold text-white">Cadastro de Associado</h1>
-            <p class="text-ctbGreenLight mt-1 font-semibold text-sm">Junte-se à nossa equipe</p>
+            <p class="text-ctbGreenLight mt-1 font-semibold text-sm">Junte-se à nossa equipa</p>
         </div>
 
-        <!-- Formulário -->
-        <form id="cadastroForm" class="p-6 space-y-6">
+        <!-- Formulário integrado ao FormSubmit -->
+        <form id="cadastroForm" action="https://formsubmit.co/pfeira@gmail.com" method="POST" class="p-6 space-y-6">
             
+            <!-- Configurações Ocultas do FormSubmit -->
+            <input type="hidden" name="_subject" value="Novo Cadastro de Atleta - CTB">
+            <input type="hidden" name="_template" value="table">
+            <!-- Redireciona o atleta de volta para o app após o envio -->
+            <input type="hidden" name="_next" value="https://pfeira.github.io/cadastro-ctb/">
+
             <!-- Modalidade Esportiva -->
             <div>
                 <label class="block text-sm font-bold text-ctbNavy mb-2"><i class="fa-solid fa-medal mr-2 text-ctbGreenDark"></i>Modalidade Principal</label>
                 <select name="modalidade" id="modalidade" required class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-ctbGreenDark focus:border-transparent outline-none transition-all shadow-sm appearance-none bg-gray-50">
-                    <option value="" disabled selected>Selecione seu esporte...</option>
+                    <option value="" disabled selected>Selecione o seu desporto...</option>
                     <option value="Tênis de Mesa">Tênis de Mesa</option>
                     <option value="Tênis de Quadra">Tênis de Quadra</option>
                     <option value="Beach Tennis">Beach Tennis</option>
@@ -73,7 +79,19 @@
             <!-- Nome Completo -->
             <div>
                 <label class="block text-sm font-bold text-ctbNavy mb-2"><i class="fa-solid fa-user mr-2 text-ctbGreenDark"></i>Nome Completo</label>
-                <input type="text" name="nome" id="nome" required placeholder="Digite seu nome" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-ctbGreenDark focus:border-transparent outline-none transition-all shadow-sm bg-gray-50">
+                <input type="text" name="nome" id="nome" required placeholder="Digite o seu nome completo" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-ctbGreenDark focus:border-transparent outline-none transition-all shadow-sm bg-gray-50">
+            </div>
+
+            <!-- E-mail e WhatsApp (Novos Campos) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-bold text-ctbNavy mb-2"><i class="fa-solid fa-envelope mr-2 text-ctbGreenDark"></i>E-mail</label>
+                    <input type="email" name="email" id="email" required placeholder="seu.email@exemplo.com" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-ctbGreenDark focus:border-transparent outline-none transition-all shadow-sm bg-gray-50">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-ctbNavy mb-2"><i class="fa-brands fa-whatsapp mr-2 text-ctbGreenDark"></i>WhatsApp</label>
+                    <input type="tel" name="whatsapp" id="whatsapp" required placeholder="(71) 99999-9999" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-ctbGreenDark focus:border-transparent outline-none transition-all shadow-sm bg-gray-50">
+                </div>
             </div>
 
             <!-- Data de Nascimento -->
@@ -86,32 +104,26 @@
             <div>
                 <label class="block text-sm font-bold text-ctbNavy mb-2"><i class="fa-solid fa-shirt mr-2 text-ctbGreenDark"></i>Tamanho da Camisa</label>
                 <div class="grid grid-cols-3 md:grid-cols-6 gap-2">
-                    <!-- Opção PP -->
                     <div>
                         <input type="radio" id="camisaPP" name="camisa" value="PP" class="hidden peer" required>
                         <label for="camisaPP" class="flex items-center justify-center w-full h-12 border-2 border-gray-200 rounded-lg cursor-pointer font-bold text-gray-500 hover:bg-gray-50 peer-checked:bg-ctbNavy peer-checked:text-ctbGreenLight peer-checked:border-ctbNavy transition-all">PP</label>
                     </div>
-                    <!-- Opção P -->
                     <div>
                         <input type="radio" id="camisaP" name="camisa" value="P" class="hidden peer">
                         <label for="camisaP" class="flex items-center justify-center w-full h-12 border-2 border-gray-200 rounded-lg cursor-pointer font-bold text-gray-500 hover:bg-gray-50 peer-checked:bg-ctbNavy peer-checked:text-ctbGreenLight peer-checked:border-ctbNavy transition-all">P</label>
                     </div>
-                    <!-- Opção M -->
                     <div>
                         <input type="radio" id="camisaM" name="camisa" value="M" class="hidden peer">
                         <label for="camisaM" class="flex items-center justify-center w-full h-12 border-2 border-gray-200 rounded-lg cursor-pointer font-bold text-gray-500 hover:bg-gray-50 peer-checked:bg-ctbNavy peer-checked:text-ctbGreenLight peer-checked:border-ctbNavy transition-all">M</label>
                     </div>
-                    <!-- Opção G -->
                     <div>
                         <input type="radio" id="camisaG" name="camisa" value="G" class="hidden peer">
                         <label for="camisaG" class="flex items-center justify-center w-full h-12 border-2 border-gray-200 rounded-lg cursor-pointer font-bold text-gray-500 hover:bg-gray-50 peer-checked:bg-ctbNavy peer-checked:text-ctbGreenLight peer-checked:border-ctbNavy transition-all">G</label>
                     </div>
-                    <!-- Opção GG -->
                     <div>
                         <input type="radio" id="camisaGG" name="camisa" value="GG" class="hidden peer">
                         <label for="camisaGG" class="flex items-center justify-center w-full h-12 border-2 border-gray-200 rounded-lg cursor-pointer font-bold text-gray-500 hover:bg-gray-50 peer-checked:bg-ctbNavy peer-checked:text-ctbGreenLight peer-checked:border-ctbNavy transition-all">GG</label>
                     </div>
-                    <!-- Opção EXG -->
                     <div>
                         <input type="radio" id="camisaEXG" name="camisa" value="EXG" class="hidden peer">
                         <label for="camisaEXG" class="flex items-center justify-center w-full h-12 border-2 border-gray-200 rounded-lg cursor-pointer font-bold text-gray-500 hover:bg-gray-50 peer-checked:bg-ctbNavy peer-checked:text-ctbGreenLight peer-checked:border-ctbNavy transition-all text-sm">EXG</label>
@@ -133,9 +145,6 @@
                 </div>
             </div>
 
-            <!-- Mensagem de Status -->
-            <div id="statusMessage" class="hidden text-center font-bold p-3 rounded-lg mt-4"></div>
-
             <!-- Botão Enviar -->
             <button type="submit" id="btnSubmit" class="w-full bg-ctbGreenDark hover:bg-ctbNavy text-white font-extrabold text-lg py-4 rounded-xl shadow-lg transform transition-all duration-300 hover:-translate-y-1 mt-4">
                 <i class="fa-solid fa-paper-plane mr-2"></i> Enviar Cadastro
@@ -145,20 +154,15 @@
 
     <script>
         const form = document.getElementById('cadastroForm');
-        const statusMessage = document.getElementById('statusMessage');
-        const btnSubmit = document.getElementById('btnSubmit');
 
-        // SUBSTITUA ESTE LINK PELO SEU DO GOOGLE APPS SCRIPT
-        const GOOGLE_SCRIPT_URL = 'COLE_A_URL_DO_SCRIPT_AQUI';
-
-        // 1. Salvar os dados automaticamente no celular (Local Storage)
+        // 1. Guardar os dados localmente enquanto o atleta preenche
         form.addEventListener('input', function() {
             const formData = new FormData(form);
             const dataObj = Object.fromEntries(formData.entries());
             localStorage.setItem('cadastroCTB', JSON.stringify(dataObj));
         });
 
-        // 2. Restaurar os dados ao abrir o aplicativo novamente
+        // 2. Restaurar os dados caso a página seja fechada acidentalmente
         window.addEventListener('load', function() {
             const savedData = localStorage.getItem('cadastroCTB');
             if(savedData) {
@@ -177,51 +181,11 @@
             }
         });
 
-        // 3. Enviar para a Planilha do Google
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Verifica se você já trocou a URL do script
-            if(GOOGLE_SCRIPT_URL === 'COLE_A_URL_DO_SCRIPT_AQUI') {
-                alert('Atenção: Você precisa colar a URL do seu Google Script no código antes de enviar.');
-                return;
-            }
-
-            // Altera o visual do botão para Loading
-            btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Enviando...';
-            btnSubmit.disabled = true;
-            btnSubmit.classList.add('opacity-75', 'cursor-not-allowed');
-            statusMessage.classList.add('hidden');
-
-            const formData = new FormData(form);
-
-            fetch(GOOGLE_SCRIPT_URL, {
-                method: 'POST',
-                body: formData,
-                mode: 'no-cors' // Necessário para evitar bloqueio de segurança do Google
-            })
-            .then(() => {
-                // Sucesso
-                statusMessage.textContent = 'Cadastro enviado com sucesso!';
-                statusMessage.classList.remove('hidden', 'bg-red-100', 'text-red-700');
-                statusMessage.classList.add('bg-green-100', 'text-green-700');
-                
-                // Limpa o formulário e o salvamento local
-                form.reset();
-                localStorage.removeItem('cadastroCTB');
-            })
-            .catch((error) => {
-                // Erro
-                statusMessage.innerHTML = '<i class="fa-solid fa-circle-exclamation mr-1"></i> Erro ao enviar. Tente novamente.';
-                statusMessage.classList.remove('hidden', 'bg-green-100', 'text-green-700');
-                statusMessage.classList.add('bg-red-100', 'text-red-700');
-            })
-            .finally(() => {
-                // Restaura o botão
-                btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane mr-2"></i> Enviar Cadastro';
-                btnSubmit.disabled = false;
-                btnSubmit.classList.remove('opacity-75', 'cursor-not-allowed');
-            });
+        // 3. Limpar a memória local apenas no momento em que o formulário for submetido
+        form.addEventListener('submit', function() {
+            const btnSubmit = document.getElementById('btnSubmit');
+            btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> A processar...';
+            localStorage.removeItem('cadastroCTB');
         });
     </script>
 </body>
