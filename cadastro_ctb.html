@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Clube dos Tenistas da Bahia</title>
+    <!-- Tailwind CSS para estilização -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Montserrat (conforme manual) -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Configuração do Tailwind com cores do Manual CTB -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'], // Alterado para Montserrat
+                    },
+                    colors: {
+                        ctb: {
+                            'light-green': '#C3FE4D', // Verde Claro do manual
+                            'dark-green': '#2BA02D',  // Verde Escuro do manual
+                            'navy-blue': '#19305A',   // Azul Marinho do manual
+                            light: '#f3f4f6',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            /* Fundo usando o Azul Marinho do CTB */
+            background-color: #19305A;
+            background-image: radial-gradient(circle at top right, #244177, #19305A);
+            min-height: 100vh;
+        }
+        
+        /* Estilização suave para o scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #19305A;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2BA02D;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #1e7320;
+        }
+
+        /* Animações Modernas */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+        .animate-slide-up {
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased flex flex-col items-center justify-center py-10 px-4 sm:px-6 lg:px-8">
+
+    <div class="max-w-3xl w-full bg-white rounded-2xl shadow-2xl overflow-hidden border-t-8 border-ctb-light-green animate-slide-up">
+        
+        <!-- Cabeçalho com Logo (Fundo Branco para destacar o logo) -->
+        <div class="bg-white text-center py-8 px-6 border-b border-gray-100 relative">
+            <img src="logoctb-alta.png" alt="Logo Clube dos Tenistas da Bahia" class="mx-auto h-32 md:h-40 w-auto object-contain mb-4" onerror="this.src='https://placehold.co/300x150/ffffff/19305A?text=Logo+CTB+Faltando';">
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-ctb-navy-blue tracking-tight uppercase">Cadastro de Associado</h1>
+            <div class="h-1 w-24 bg-ctb-dark-green mx-auto mt-4 rounded-full"></div>
+        </div>
+
+        <!-- Área de Mensagens (Sucesso/Erro) -->
+        <div id="messageBox" class="hidden mx-8 mt-6 p-4 rounded-lg text-center font-medium shadow-sm transition-all duration-300"></div>
+
+        <!-- Corpo do Formulário -->
+        <form id="cadastroForm" class="p-8 sm:p-10 space-y-8" onsubmit="handleFormSubmit(event)">
+            
+            <!-- Seção de Dados Pessoais -->
+            <div>
+                <h2 class="text-xl font-bold text-ctb-navy-blue border-b-2 border-gray-100 pb-2 mb-6 flex items-center">
+                    <div class="bg-ctb-light-green/20 p-2 rounded-lg mr-3">
+                        <i class="fas fa-user text-ctb-dark-green"></i>
+                    </div>
+                    Dados Pessoais
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Nome Completo -->
+                    <div class="md:col-span-2">
+                        <label for="nome" class="block text-sm font-semibold text-gray-700 mb-1">Nome Completo <span class="text-red-500">*</span></label>
+                        <div class="relative group">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <i class="fas fa-id-card text-gray-400 group-focus-within:text-ctb-dark-green transition-colors"></i>
+                            </div>
+                            <input type="text" id="nome" name="nome" required
+                                class="w-full pl-11 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-ctb-dark-green focus:border-ctb-dark-green transition-all shadow-sm text-lg"
+                                placeholder="Digite seu nome completo">
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="md:col-span-2">
+                        <label for="email" class="block text-sm font-semibold text-gray-700 mb-1">E-mail <span class="text-red-500">*</span></label>
+                        <div class="relative group">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <i class="fas fa-envelope text-gray-400 group-focus-within:text-ctb-dark-green transition-colors"></i>
+                            </div>
+                            <input type="email" id="email" name="email" required
+                                class="w-full pl-11 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-ctb-dark-green focus:border-ctb-dark-green transition-all shadow-sm text-lg"
+                                placeholder="seu@email.com">
+                        </div>
+                    </div>
+
+                    <!-- Celular/WhatsApp -->
+                    <div>
+                        <label for="telefone" class="block text-sm font-semibold text-gray-700 mb-1">Celular / WhatsApp <span class="text-red-500">*</span></label>
+                        <div class="relative group">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <i class="fab fa-whatsapp text-gray-400 group-focus-within:text-ctb-dark-green transition-colors text-lg"></i>
+                            </div>
+                            <input type="tel" id="telefone" name="telefone" required
+                                class="w-full pl-11 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-ctb-dark-green focus:border-ctb-dark-green transition-all shadow-sm text-lg"
+                                placeholder="(00) 00000-0000">
+                        </div>
+                    </div>
+
+                    <!-- Dia/Mês Nascimento -->
+                    <div>
+                        <label for="nascimento" class="block text-sm font-semibold text-gray-700 mb-1">Dia/Mês Nascimento <span class="text-red-500">*</span></label>
+                        <div class="relative group">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <i class="fas fa-calendar-day text-gray-400 group-focus-within:text-ctb-dark-green transition-colors"></i>
+                            </div>
+                            <input type="text" id="nascimento" name="nascimento" required maxlength="5"
+                                class="w-full pl-11 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-ctb-dark-green focus:border-ctb-dark-green transition-all shadow-sm text-lg"
+                                placeholder="DD/MM">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção Tamanho da Camisa -->
+            <div>
+                <h2 class="text-xl font-bold text-ctb-navy-blue border-b-2 border-gray-100 pb-2 mb-6 flex items-center mt-8">
+                    <div class="bg-ctb-light-green/20 p-2 rounded-lg mr-3">
+                        <i class="fas fa-tshirt text-ctb-dark-green"></i>
+                    </div>
+                    Tamanho da Camisa
+                </h2>
+                
+                <div class="flex flex-wrap gap-3 sm:gap-4 justify-between sm:justify-start">
+                    <!-- Opções de Tamanho -->
+                    <label class="relative flex items-center justify-center cursor-pointer group">
+                        <input type="radio" name="camisa" value="PP" class="peer sr-only" required>
+                        <div class="w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center rounded-2xl border-2 border-gray-200 bg-gray-50 text-gray-600 font-bold text-lg peer-checked:border-ctb-dark-green peer-checked:bg-ctb-dark-green peer-checked:text-white transition-all duration-300 hover:border-ctb-light-green shadow-sm hover:shadow-md transform hover:-translate-y-1">
+                            PP
+                        </div>
+                    </label>
+
+                    <label class="relative flex items-center justify-center cursor-pointer group">
+                        <input type="radio" name="camisa" value="P" class="peer sr-only">
+                        <div class="w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center rounded-2xl border-2 border-gray-200 bg-gray-50 text-gray-600 font-bold text-lg peer-checked:border-ctb-dark-green peer-checked:bg-ctb-dark-green peer-checked:text-white transition-all duration-300 hover:border-ctb-light-green shadow-sm hover:shadow-md transform hover:-translate-y-1">
+                            P
+                        </div>
+                    </label>
+
+                    <label class="relative flex items-center justify-center cursor-pointer group">
+                        <input type="radio" name="camisa" value="M" class="peer sr-only">
+                        <div class="w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center rounded-2xl border-2 border-gray-200 bg-gray-50 text-gray-600 font-bold text-lg peer-checked:border-ctb-dark-green peer-checked:bg-ctb-dark-green peer-checked:text-white transition-all duration-300 hover:border-ctb-light-green shadow-sm hover:shadow-md transform hover:-translate-y-1">
+                            M
+                        </div>
+                    </label>
+
+                    <label class="relative flex items-center justify-center cursor-pointer group">
+                        <input type="radio" name="camisa" value="G" class="peer sr-only">
+                        <div class="w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center rounded-2xl border-2 border-gray-200 bg-gray-50 text-gray-600 font-bold text-lg peer-checked:border-ctb-dark-green peer-checked:bg-ctb-dark-green peer-checked:text-white transition-all duration-300 hover:border-ctb-light-green shadow-sm hover:shadow-md transform hover:-translate-y-1">
+                            G
+                        </div>
+                    </label>
+
+                    <label class="relative flex items-center justify-center cursor-pointer group">
+                        <input type="radio" name="camisa" value="GG" class="peer sr-only">
+                        <div class="w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center rounded-2xl border-2 border-gray-200 bg-gray-50 text-gray-600 font-bold text-lg peer-checked:border-ctb-dark-green peer-checked:bg-ctb-dark-green peer-checked:text-white transition-all duration-300 hover:border-ctb-light-green shadow-sm hover:shadow-md transform hover:-translate-y-1">
+                            GG
+                        </div>
+                    </label>
+
+                    <label class="relative flex items-center justify-center cursor-pointer group">
+                        <input type="radio" name="camisa" value="EXG" class="peer sr-only">
+                        <div class="w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center rounded-2xl border-2 border-gray-200 bg-gray-50 text-gray-600 font-bold text-lg peer-checked:border-ctb-dark-green peer-checked:bg-ctb-dark-green peer-checked:text-white transition-all duration-300 hover:border-ctb-light-green shadow-sm hover:shadow-md transform hover:-translate-y-1">
+                            EXG
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Seção de Dados Esportivos -->
+            <div>
+                <h2 class="text-xl font-bold text-ctb-navy-blue border-b-2 border-gray-100 pb-2 mb-6 flex items-center mt-8">
+                    <div class="bg-ctb-light-green/20 p-2 rounded-lg mr-3">
+                        <i class="fas fa-table-tennis text-ctb-dark-green"></i>
+                    </div>
+                    Modalidade e Nível
+                </h2>
+
+                <!-- Modalidade Principal -->
+                <div class="mb-6">
+                    <label class="block text-sm font-semibold text-gray-700 mb-3">Modalidade Principal <span class="text-red-500">*</span></label>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        
+                        <label class="relative flex items-center justify-center p-4 border-2 rounded-xl cursor-pointer hover:bg-gray-50 transition-all duration-300 border-gray-200 group transform hover:-translate-y-1 hover:shadow-md">
+                            <input type="radio" name="modalidade" value="Beach Tennis" class="peer sr-only" required>
+                            <div class="absolute inset-0 rounded-xl peer-checked:border-2 peer-checked:border-ctb-dark-green peer-checked:bg-[rgba(195,254,77,0.15)] pointer-events-none transition-all"></div>
+                            <div class="flex flex-col items-center z-10 text-gray-400 peer-checked:text-ctb-dark-green group-hover:text-ctb-navy-blue transition-colors">
+                                <i class="fas fa-umbrella-beach text-4xl mb-3"></i>
+                                <span class="font-bold">Beach Tennis</span>
+                            </div>
+                        </label>
+
+                        <label class="relative flex items-center justify-center p-4 border-2 rounded-xl cursor-pointer hover:bg-gray-50 transition-all duration-300 border-gray-200 group transform hover:-translate-y-1 hover:shadow-md">
+                            <input type="radio" name="modalidade" value="Tênis de Quadra" class="peer sr-only">
+                            <div class="absolute inset-0 rounded-xl peer-checked:border-2 peer-checked:border-ctb-dark-green peer-checked:bg-[rgba(195,254,77,0.15)] pointer-events-none transition-all"></div>
+                            <div class="flex flex-col items-center z-10 text-gray-400 peer-checked:text-ctb-dark-green group-hover:text-ctb-navy-blue transition-colors">
+                                <i class="fas fa-baseball-ball text-4xl mb-3"></i>
+                                <span class="font-bold text-center">Tênis de Quadra</span>
+                            </div>
+                        </label>
+
+                        <label class="relative flex items-center justify-center p-4 border-2 rounded-xl cursor-pointer hover:bg-gray-50 transition-all duration-300 border-gray-200 group transform hover:-translate-y-1 hover:shadow-md">
+                            <input type="radio" name="modalidade" value="Tênis de Mesa" class="peer sr-only">
+                            <div class="absolute inset-0 rounded-xl peer-checked:border-2 peer-checked:border-ctb-dark-green peer-checked:bg-[rgba(195,254,77,0.15)] pointer-events-none transition-all"></div>
+                            <div class="flex flex-col items-center z-10 text-gray-400 peer-checked:text-ctb-dark-green group-hover:text-ctb-navy-blue transition-colors">
+                                <i class="fas fa-table-tennis-paddle-ball text-4xl mb-3"></i>
+                                <span class="font-bold text-center">Tênis de Mesa</span>
+                            </div>
+                        </label>
+
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Ranking -->
+                    <div>
+                        <label for="ranking" class="block text-sm font-semibold text-gray-700 mb-1">Ranking (Max 50 caracteres)</label>
+                        <div class="relative group">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <i class="fas fa-trophy text-gray-400 group-focus-within:text-ctb-dark-green transition-colors"></i>
+                            </div>
+                            <input type="text" id="ranking" name="ranking" maxlength="50"
+                                class="w-full pl-11 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-ctb-dark-green focus:border-ctb-dark-green transition-all shadow-sm text-lg bg-gray-50 focus:bg-white"
+                                placeholder="Ex: 1º Classe, Categoria B...">
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1 text-right"><span id="rankingCount">0</span>/50</p>
+                    </div>
+
+                    <!-- Rating -->
+                    <div>
+                        <label for="rating" class="block text-sm font-semibold text-gray-700 mb-1">Rating (Max 50 caracteres)</label>
+                        <div class="relative group">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <i class="fas fa-star text-gray-400 group-focus-within:text-ctb-dark-green transition-colors"></i>
+                            </div>
+                            <input type="text" id="rating" name="rating" maxlength="50"
+                                class="w-full pl-11 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-ctb-dark-green focus:border-ctb-dark-green transition-all shadow-sm text-lg bg-gray-50 focus:bg-white"
+                                placeholder="Ex: UTR 5.5, Nível 3...">
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1 text-right"><span id="ratingCount">0</span>/50</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botão de Envio -->
+            <div class="pt-6 border-t border-gray-100">
+                <button type="submit" id="submitBtn"
+                    class="w-full bg-ctb-dark-green hover:bg-[#228224] text-white font-extrabold py-5 px-8 rounded-xl shadow-lg transition duration-300 transform hover:-translate-y-1 hover:shadow-2xl text-xl flex items-center justify-center tracking-wide group">
+                    <i class="fas fa-check-circle mr-3 group-hover:scale-110 transition-transform"></i> FINALIZAR CADASTRO
+                </button>
+            </div>
+            
+        </form>
+    </div>
+
+    <!-- Rodapé -->
+    <p class="text-gray-300 mt-6 text-sm text-center font-medium animate-fade-in" style="animation-delay: 0.3s;">
+        © 2026 Clube dos Tenistas da Bahia. Todos os direitos reservados.
+    </p>
+
+    <script>
+        // Lógica para contar caracteres dos campos Ranking e Rating
+        function setupCharacterCount(inputId, countId) {
+            const input = document.getElementById(inputId);
+            const counter = document.getElementById(countId);
+            
+            input.addEventListener('input', function() {
+                counter.textContent = this.value.length;
+                if(this.value.length === 50) {
+                    counter.classList.add('text-red-500', 'font-bold');
+                } else {
+                    counter.classList.remove('text-red-500', 'font-bold');
+                }
+            });
+        }
+
+        setupCharacterCount('ranking', 'rankingCount');
+        setupCharacterCount('rating', 'ratingCount');
+
+        // Formatação simples de celular
+        document.getElementById('telefone').addEventListener('input', function (e) {
+            let val = e.target.value.replace(/\D/g, '');
+            let formatted = val;
+            if (val.length > 0) {
+                formatted = '(' + val.substring(0, 2);
+                if (val.length > 2) {
+                    formatted += ') ' + val.substring(2, 7);
+                }
+                if (val.length > 7) {
+                    formatted += '-' + val.substring(7, 11);
+                }
+            }
+            e.target.value = formatted;
+        });
+
+        // Formatação de Dia/Mês Nascimento (DD/MM)
+        document.getElementById('nascimento').addEventListener('input', function (e) {
+            let val = e.target.value.replace(/\D/g, '');
+            if (val.length >= 2) {
+                val = val.substring(0, 2) + '/' + val.substring(2, 4);
+            }
+            e.target.value = val;
+        });
+
+        // Configuração de salvamento automático para o usuário não perder dados
+        const textInputs = ['nome', 'email', 'telefone', 'nascimento', 'ranking', 'rating'];
+        const radioInputs = ['camisa', 'modalidade'];
+
+        function saveDraft() {
+            textInputs.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) localStorage.setItem('ctbDraft_' + id, el.value);
+            });
+            radioInputs.forEach(name => {
+                const checkedEl = document.querySelector(`input[name="${name}"]:checked`);
+                if (checkedEl) localStorage.setItem('ctbDraft_' + name, checkedEl.value);
+            });
+        }
+
+        function loadDraft() {
+            textInputs.forEach(id => {
+                const savedValue = localStorage.getItem('ctbDraft_' + id);
+                if (savedValue) {
+                    const el = document.getElementById(id);
+                    el.value = savedValue;
+                    el.dispatchEvent(new Event('input')); // Dispara o evento para atualizar contadores e formatação
+                }
+            });
+            radioInputs.forEach(name => {
+                const savedValue = localStorage.getItem('ctbDraft_' + name);
+                if (savedValue) {
+                    const el = document.querySelector(`input[name="${name}"][value="${savedValue}"]`);
+                    if (el) el.checked = true;
+                }
+            });
+        }
+
+        function clearDraft() {
+            textInputs.forEach(id => localStorage.removeItem('ctbDraft_' + id));
+            radioInputs.forEach(name => localStorage.removeItem('ctbDraft_' + name));
+        }
+
+        // Adiciona os gatilhos para salvar a cada digitação ou clique
+        document.getElementById('cadastroForm').addEventListener('input', saveDraft);
+        document.getElementById('cadastroForm').addEventListener('change', saveDraft);
+        
+        // Carrega o rascunho salvo assim que a página abre
+        window.addEventListener('DOMContentLoaded', loadDraft);
+
+        // Manipulação do envio do formulário
+        function handleFormSubmit(event) {
+            event.preventDefault();
+
+            const btn = document.getElementById('submitBtn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-3"></i> Processando...';
+            btn.disabled = true;
+            btn.classList.add('opacity-75', 'cursor-not-allowed', 'scale-95');
+
+            setTimeout(() => {
+                const form = document.getElementById('cadastroForm');
+                const formData = new FormData(form);
+                const nome = formData.get('nome');
+                
+                // Limpa o formulário e o cache salvo
+                form.reset();
+                clearDraft();
+                
+                document.getElementById('rankingCount').textContent = '0';
+                document.getElementById('ratingCount').textContent = '0';
+
+                // Mostra mensagem de sucesso lindona
+                const msgBox = document.getElementById('messageBox');
+                msgBox.innerHTML = `<div class="flex flex-col items-center"><i class="fas fa-check-circle text-4xl mb-3"></i><span class="text-xl">Cadastro realizado com sucesso!</span><span class="text-md font-normal mt-1">Bem-vindo(a) ao clube, <strong>${nome.split(' ')[0]}</strong>!</span></div>`;
+                msgBox.className = 'mx-8 mt-6 p-6 rounded-2xl text-center font-bold shadow-lg bg-ctb-light-green/20 text-ctb-dark-green border-2 border-ctb-dark-green animate-slide-up block';
+                
+                // Volta o botão ao normal
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                btn.classList.remove('opacity-75', 'cursor-not-allowed', 'scale-95');
+
+                // Retorna ao topo para ver a mensagem
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                setTimeout(() => {
+                    msgBox.classList.add('hidden');
+                    msgBox.classList.remove('block', 'animate-slide-up');
+                }, 6000);
+
+            }, 1800);
+        }
+    </script>
+</body>
+</html>
