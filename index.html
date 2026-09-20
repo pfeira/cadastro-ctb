@@ -4,388 +4,225 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro - Clube dos Tenistas da Bahia</title>
-    <!-- Tailwind CSS para estilização -->
+
+    <!-- Configuração para o WhatsApp / Redes Sociais -->
+    <meta property="og:title" content="Cadastro de Atletas - CTB" />
+    <meta property="og:description" content="Faça seu cadastro de associado no Clube dos Tenistas da Bahia. Válido para Tênis de Mesa, Tênis de Quadra e Beach Tennis." />
+    <meta property="og:image" content="https://pfeira.github.io/cadastro-ctb/logoctb-alta.png" />
+    <meta property="og:url" content="https://pfeira.github.io/cadastro-ctb/" />
+    <meta property="og:type" content="website" />
+
+    <!-- Configuração para o Web App (Instalação no Celular) -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2BA02D">
+    <link rel="apple-touch-icon" href="logoctb-alta.png">
+
+    <!-- Tailwind CSS para o visual moderno -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Montserrat (conforme manual) -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- FontAwesome para ícones -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Configuração do Tailwind com cores do Manual CTB -->
+    <!-- Fonte Montserrat (Oficial do Manual CTB) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+
+    <!-- Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Configuração das Cores do Manual CTB -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
+                    colors: {
+                        ctbGreenLight: '#C3FE4D',
+                        ctbGreenDark: '#2BA02D',
+                        ctbNavy: '#19305A',
+                    },
                     fontFamily: {
                         sans: ['Montserrat', 'sans-serif'],
-                    },
-                    colors: {
-                        ctb: {
-                            'light-green': '#C3FE4D',
-                            'dark-green': '#2BA02D',
-                            'navy-blue': '#19305A',
-                            light: '#f3f4f6',
-                        }
                     }
                 }
             }
         }
     </script>
-    
-    <style>
-        body {
-            background-color: #19305A;
-            background-image: radial-gradient(circle at top right, #244177, #19305A);
-            min-height: 100vh;
-        }
-        
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #19305A; }
-        ::-webkit-scrollbar-thumb { background: #2BA02D; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #1e7320; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
-        .animate-slide-up { animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-    </style>
 </head>
-<body class="text-gray-800 antialiased flex flex-col items-center justify-center py-10 px-4 sm:px-6 lg:px-8">
+<body class="bg-gray-50 min-h-screen text-ctbNavy font-sans flex items-center justify-center p-4">
 
-    <div class="max-w-3xl w-full bg-white rounded-2xl shadow-2xl overflow-hidden border-t-8 border-ctb-light-green animate-slide-up">
-        
+    <div class="bg-white max-w-lg w-full rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 hover:shadow-2xl">
         <!-- Cabeçalho -->
-        <div class="bg-white text-center py-8 px-6 border-b border-gray-100 relative">
-            <img src="logoctb-alta.png" alt="Logo Clube dos Tenistas da Bahia" class="mx-auto h-32 md:h-40 w-auto object-contain mb-4" onerror="this.src='https://placehold.co/300x150/ffffff/19305A?text=Logo+CTB+Faltando';">
-            <h1 class="text-2xl sm:text-3xl font-extrabold text-ctb-navy-blue tracking-tight uppercase">Cadastro de Associado</h1>
-            <div class="h-1 w-24 bg-ctb-dark-green mx-auto mt-4 rounded-full"></div>
+        <div class="bg-ctbNavy p-6 text-center rounded-b-3xl shadow-md">
+            <img src="logoctb-alta.png" alt="Logomarca CTB" class="mx-auto h-28 object-contain mb-4 drop-shadow-md transition-transform duration-300 hover:scale-105">
+            <h1 class="text-2xl font-extrabold text-white">Cadastro de Associado</h1>
+            <p class="text-ctbGreenLight mt-1 font-semibold text-sm">Junte-se à nossa equipe</p>
         </div>
 
-        <!-- Área de Mensagens -->
-        <div id="messageBox" class="hidden mx-8 mt-6 p-4 rounded-lg text-center font-medium shadow-sm transition-all duration-300"></div>
-
-        <!-- Corpo do Formulário -->
-        <form id="cadastroForm" class="p-8 sm:p-10 space-y-8" onsubmit="handleFormSubmit(event)">
+        <!-- Formulário -->
+        <form id="cadastroForm" class="p-6 space-y-6">
             
-            <!-- Configurações Ocultas para o Envio de E-mail -->
-            <input type="hidden" name="_subject" value="Novo Cadastro de Atleta - CTB!">
-            <input type="hidden" name="_captcha" value="false">
-            <input type="hidden" name="_template" value="table">
-            
-            <!-- Seção de Dados Pessoais -->
+            <!-- Modalidade Esportiva -->
             <div>
-                <h2 class="text-xl font-bold text-ctb-navy-blue border-b-2 border-gray-100 pb-2 mb-6 flex items-center">
-                    <div class="bg-ctb-light-green/20 p-2 rounded-lg mr-3">
-                        <i class="fas fa-user text-ctb-dark-green"></i>
-                    </div>
-                    Dados Pessoais
-                </h2>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="md:col-span-2">
-                        <label for="nome" class="block text-sm font-semibold text-gray-700 mb-1">Nome Completo <span class="text-red-500">*</span></label>
-                        <div class="relative group">
-                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                <i class="fas fa-id-card text-gray-400 group-focus-within:text-ctb-dark-green transition-colors"></i>
-                            </div>
-                            <input type="text" id="nome" name="Nome" required
-                                class="w-full pl-11 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-ctb-dark-green focus:border-ctb-dark-green transition-all shadow-sm text-lg"
-                                placeholder="Digite seu nome completo">
-                        </div>
-                    </div>
-
-                    <div class="md:col-span-2">
-                        <label for="email" class="block text-sm font-semibold text-gray-700 mb-1">E-mail <span class="text-red-500">*</span></label>
-                        <div class="relative group">
-                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                <i class="fas fa-envelope text-gray-400 group-focus-within:text-ctb-dark-green transition-colors"></i>
-                            </div>
-                            <input type="email" id="email" name="Email" required
-                                class="w-full pl-11 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-ctb-dark-green focus:border-ctb-dark-green transition-all shadow-sm text-lg"
-                                placeholder="seu@email.com">
-                        </div>
-                    </div>
-
-                    <div>
-                        <label for="telefone" class="block text-sm font-semibold text-gray-700 mb-1">Celular / WhatsApp <span class="text-red-500">*</span></label>
-                        <div class="relative group">
-                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                <i class="fab fa-whatsapp text-gray-400 group-focus-within:text-ctb-dark-green transition-colors text-lg"></i>
-                            </div>
-                            <input type="tel" id="telefone" name="Telefone" required
-                                class="w-full pl-11 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-ctb-dark-green focus:border-ctb-dark-green transition-all shadow-sm text-lg"
-                                placeholder="(00) 00000-0000">
-                        </div>
-                    </div>
-
-                    <div>
-                        <label for="nascimento" class="block text-sm font-semibold text-gray-700 mb-1">Dia/Mês Nascimento <span class="text-red-500">*</span></label>
-                        <div class="relative group">
-                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                <i class="fas fa-calendar-day text-gray-400 group-focus-within:text-ctb-dark-green transition-colors"></i>
-                            </div>
-                            <input type="text" id="nascimento" name="Nascimento" required maxlength="5"
-                                class="w-full pl-11 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-ctb-dark-green focus:border-ctb-dark-green transition-all shadow-sm text-lg"
-                                placeholder="DD/MM">
-                        </div>
-                    </div>
-                </div>
+                <label class="block text-sm font-bold text-ctbNavy mb-2"><i class="fa-solid fa-medal mr-2 text-ctbGreenDark"></i>Modalidade Principal</label>
+                <select name="modalidade" id="modalidade" required class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-ctbGreenDark focus:border-transparent outline-none transition-all shadow-sm appearance-none bg-gray-50">
+                    <option value="" disabled selected>Selecione seu esporte...</option>
+                    <option value="Tênis de Mesa">Tênis de Mesa</option>
+                    <option value="Tênis de Quadra">Tênis de Quadra</option>
+                    <option value="Beach Tennis">Beach Tennis</option>
+                </select>
             </div>
 
-            <!-- Seção Tamanho da Camisa -->
+            <!-- Nome Completo -->
             <div>
-                <h2 class="text-xl font-bold text-ctb-navy-blue border-b-2 border-gray-100 pb-2 mb-6 flex items-center mt-8">
-                    <div class="bg-ctb-light-green/20 p-2 rounded-lg mr-3">
-                        <i class="fas fa-tshirt text-ctb-dark-green"></i>
-                    </div>
-                    Tamanho da Camisa
-                </h2>
-                
-                <div class="flex flex-wrap gap-3 sm:gap-4 justify-between sm:justify-start">
-                    <label class="relative flex items-center justify-center cursor-pointer group">
-                        <input type="radio" name="Tamanho_Camisa" value="PP" class="peer sr-only" required>
-                        <div class="w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center rounded-2xl border-2 border-gray-200 bg-gray-50 text-gray-600 font-bold text-lg peer-checked:border-ctb-dark-green peer-checked:bg-ctb-dark-green peer-checked:text-white transition-all duration-300 hover:border-ctb-light-green shadow-sm hover:shadow-md transform hover:-translate-y-1">PP</div>
-                    </label>
-                    <label class="relative flex items-center justify-center cursor-pointer group">
-                        <input type="radio" name="Tamanho_Camisa" value="P" class="peer sr-only">
-                        <div class="w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center rounded-2xl border-2 border-gray-200 bg-gray-50 text-gray-600 font-bold text-lg peer-checked:border-ctb-dark-green peer-checked:bg-ctb-dark-green peer-checked:text-white transition-all duration-300 hover:border-ctb-light-green shadow-sm hover:shadow-md transform hover:-translate-y-1">P</div>
-                    </label>
-                    <label class="relative flex items-center justify-center cursor-pointer group">
-                        <input type="radio" name="Tamanho_Camisa" value="M" class="peer sr-only">
-                        <div class="w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center rounded-2xl border-2 border-gray-200 bg-gray-50 text-gray-600 font-bold text-lg peer-checked:border-ctb-dark-green peer-checked:bg-ctb-dark-green peer-checked:text-white transition-all duration-300 hover:border-ctb-light-green shadow-sm hover:shadow-md transform hover:-translate-y-1">M</div>
-                    </label>
-                    <label class="relative flex items-center justify-center cursor-pointer group">
-                        <input type="radio" name="Tamanho_Camisa" value="G" class="peer sr-only">
-                        <div class="w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center rounded-2xl border-2 border-gray-200 bg-gray-50 text-gray-600 font-bold text-lg peer-checked:border-ctb-dark-green peer-checked:bg-ctb-dark-green peer-checked:text-white transition-all duration-300 hover:border-ctb-light-green shadow-sm hover:shadow-md transform hover:-translate-y-1">G</div>
-                    </label>
-                    <label class="relative flex items-center justify-center cursor-pointer group">
-                        <input type="radio" name="Tamanho_Camisa" value="GG" class="peer sr-only">
-                        <div class="w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center rounded-2xl border-2 border-gray-200 bg-gray-50 text-gray-600 font-bold text-lg peer-checked:border-ctb-dark-green peer-checked:bg-ctb-dark-green peer-checked:text-white transition-all duration-300 hover:border-ctb-light-green shadow-sm hover:shadow-md transform hover:-translate-y-1">GG</div>
-                    </label>
-                    <label class="relative flex items-center justify-center cursor-pointer group">
-                        <input type="radio" name="Tamanho_Camisa" value="EXG" class="peer sr-only">
-                        <div class="w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center rounded-2xl border-2 border-gray-200 bg-gray-50 text-gray-600 font-bold text-lg peer-checked:border-ctb-dark-green peer-checked:bg-ctb-dark-green peer-checked:text-white transition-all duration-300 hover:border-ctb-light-green shadow-sm hover:shadow-md transform hover:-translate-y-1">EXG</div>
-                    </label>
-                </div>
+                <label class="block text-sm font-bold text-ctbNavy mb-2"><i class="fa-solid fa-user mr-2 text-ctbGreenDark"></i>Nome Completo</label>
+                <input type="text" name="nome" id="nome" required placeholder="Digite seu nome" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-ctbGreenDark focus:border-transparent outline-none transition-all shadow-sm bg-gray-50">
             </div>
 
-            <!-- Seção de Dados Esportivos -->
+            <!-- Data de Nascimento -->
             <div>
-                <h2 class="text-xl font-bold text-ctb-navy-blue border-b-2 border-gray-100 pb-2 mb-6 flex items-center mt-8">
-                    <div class="bg-ctb-light-green/20 p-2 rounded-lg mr-3">
-                        <i class="fas fa-table-tennis text-ctb-dark-green"></i>
-                    </div>
-                    Modalidade e Nível
-                </h2>
+                <label class="block text-sm font-bold text-ctbNavy mb-2"><i class="fa-solid fa-calendar-days mr-2 text-ctbGreenDark"></i>Data de Nascimento</label>
+                <input type="date" name="nascimento" id="nascimento" required class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-ctbGreenDark focus:border-transparent outline-none transition-all shadow-sm bg-gray-50 text-gray-700">
+            </div>
 
-                <div class="mb-6">
-                    <label class="block text-sm font-semibold text-gray-700 mb-3">Modalidade Principal <span class="text-red-500">*</span></label>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                        <label class="relative flex items-center justify-center p-4 border-2 rounded-xl cursor-pointer hover:bg-gray-50 transition-all duration-300 border-gray-200 group transform hover:-translate-y-1 hover:shadow-md">
-                            <input type="radio" name="Modalidade" value="Beach Tennis" class="peer sr-only" required>
-                            <div class="absolute inset-0 rounded-xl peer-checked:border-2 peer-checked:border-ctb-dark-green peer-checked:bg-[rgba(195,254,77,0.15)] pointer-events-none transition-all"></div>
-                            <div class="flex flex-col items-center z-10 text-gray-400 peer-checked:text-ctb-dark-green group-hover:text-ctb-navy-blue transition-colors">
-                                <i class="fas fa-umbrella-beach text-4xl mb-3"></i>
-                                <span class="font-bold">Beach Tennis</span>
-                            </div>
-                        </label>
-                        <label class="relative flex items-center justify-center p-4 border-2 rounded-xl cursor-pointer hover:bg-gray-50 transition-all duration-300 border-gray-200 group transform hover:-translate-y-1 hover:shadow-md">
-                            <input type="radio" name="Modalidade" value="Tênis de Quadra" class="peer sr-only">
-                            <div class="absolute inset-0 rounded-xl peer-checked:border-2 peer-checked:border-ctb-dark-green peer-checked:bg-[rgba(195,254,77,0.15)] pointer-events-none transition-all"></div>
-                            <div class="flex flex-col items-center z-10 text-gray-400 peer-checked:text-ctb-dark-green group-hover:text-ctb-navy-blue transition-colors">
-                                <i class="fas fa-baseball-ball text-4xl mb-3"></i>
-                                <span class="font-bold text-center">Tênis de Quadra</span>
-                            </div>
-                        </label>
-                        <label class="relative flex items-center justify-center p-4 border-2 rounded-xl cursor-pointer hover:bg-gray-50 transition-all duration-300 border-gray-200 group transform hover:-translate-y-1 hover:shadow-md">
-                            <input type="radio" name="Modalidade" value="Tênis de Mesa" class="peer sr-only">
-                            <div class="absolute inset-0 rounded-xl peer-checked:border-2 peer-checked:border-ctb-dark-green peer-checked:bg-[rgba(195,254,77,0.15)] pointer-events-none transition-all"></div>
-                            <div class="flex flex-col items-center z-10 text-gray-400 peer-checked:text-ctb-dark-green group-hover:text-ctb-navy-blue transition-colors">
-                                <i class="fas fa-table-tennis-paddle-ball text-4xl mb-3"></i>
-                                <span class="font-bold text-center">Tênis de Mesa</span>
-                            </div>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Tamanho da Camisa -->
+            <div>
+                <label class="block text-sm font-bold text-ctbNavy mb-2"><i class="fa-solid fa-shirt mr-2 text-ctbGreenDark"></i>Tamanho da Camisa</label>
+                <div class="grid grid-cols-3 md:grid-cols-6 gap-2">
+                    <!-- Opção PP -->
                     <div>
-                        <label for="ranking" class="block text-sm font-semibold text-gray-700 mb-1">Ranking (Max 50 caracteres)</label>
-                        <div class="relative group">
-                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                <i class="fas fa-trophy text-gray-400 group-focus-within:text-ctb-dark-green transition-colors"></i>
-                            </div>
-                            <input type="text" id="ranking" name="Ranking" maxlength="50"
-                                class="w-full pl-11 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-ctb-dark-green focus:border-ctb-dark-green transition-all shadow-sm text-lg bg-gray-50 focus:bg-white"
-                                placeholder="Ex: 1º Classe, Categoria B...">
-                        </div>
-                        <p class="text-xs text-gray-500 mt-1 text-right"><span id="rankingCount">0</span>/50</p>
+                        <input type="radio" id="camisaPP" name="camisa" value="PP" class="hidden peer" required>
+                        <label for="camisaPP" class="flex items-center justify-center w-full h-12 border-2 border-gray-200 rounded-lg cursor-pointer font-bold text-gray-500 hover:bg-gray-50 peer-checked:bg-ctbNavy peer-checked:text-ctbGreenLight peer-checked:border-ctbNavy transition-all">PP</label>
                     </div>
-
+                    <!-- Opção P -->
                     <div>
-                        <label for="rating" class="block text-sm font-semibold text-gray-700 mb-1">Rating (Max 50 caracteres)</label>
-                        <div class="relative group">
-                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                <i class="fas fa-star text-gray-400 group-focus-within:text-ctb-dark-green transition-colors"></i>
-                            </div>
-                            <input type="text" id="rating" name="Rating" maxlength="50"
-                                class="w-full pl-11 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-ctb-dark-green focus:border-ctb-dark-green transition-all shadow-sm text-lg bg-gray-50 focus:bg-white"
-                                placeholder="Ex: UTR 5.5, Nível 3...">
-                        </div>
-                        <p class="text-xs text-gray-500 mt-1 text-right"><span id="ratingCount">0</span>/50</p>
+                        <input type="radio" id="camisaP" name="camisa" value="P" class="hidden peer">
+                        <label for="camisaP" class="flex items-center justify-center w-full h-12 border-2 border-gray-200 rounded-lg cursor-pointer font-bold text-gray-500 hover:bg-gray-50 peer-checked:bg-ctbNavy peer-checked:text-ctbGreenLight peer-checked:border-ctbNavy transition-all">P</label>
+                    </div>
+                    <!-- Opção M -->
+                    <div>
+                        <input type="radio" id="camisaM" name="camisa" value="M" class="hidden peer">
+                        <label for="camisaM" class="flex items-center justify-center w-full h-12 border-2 border-gray-200 rounded-lg cursor-pointer font-bold text-gray-500 hover:bg-gray-50 peer-checked:bg-ctbNavy peer-checked:text-ctbGreenLight peer-checked:border-ctbNavy transition-all">M</label>
+                    </div>
+                    <!-- Opção G -->
+                    <div>
+                        <input type="radio" id="camisaG" name="camisa" value="G" class="hidden peer">
+                        <label for="camisaG" class="flex items-center justify-center w-full h-12 border-2 border-gray-200 rounded-lg cursor-pointer font-bold text-gray-500 hover:bg-gray-50 peer-checked:bg-ctbNavy peer-checked:text-ctbGreenLight peer-checked:border-ctbNavy transition-all">G</label>
+                    </div>
+                    <!-- Opção GG -->
+                    <div>
+                        <input type="radio" id="camisaGG" name="camisa" value="GG" class="hidden peer">
+                        <label for="camisaGG" class="flex items-center justify-center w-full h-12 border-2 border-gray-200 rounded-lg cursor-pointer font-bold text-gray-500 hover:bg-gray-50 peer-checked:bg-ctbNavy peer-checked:text-ctbGreenLight peer-checked:border-ctbNavy transition-all">GG</label>
+                    </div>
+                    <!-- Opção EXG -->
+                    <div>
+                        <input type="radio" id="camisaEXG" name="camisa" value="EXG" class="hidden peer">
+                        <label for="camisaEXG" class="flex items-center justify-center w-full h-12 border-2 border-gray-200 rounded-lg cursor-pointer font-bold text-gray-500 hover:bg-gray-50 peer-checked:bg-ctbNavy peer-checked:text-ctbGreenLight peer-checked:border-ctbNavy transition-all text-sm">EXG</label>
                     </div>
                 </div>
             </div>
 
-            <!-- Botão de Envio -->
-            <div class="pt-6 border-t border-gray-100">
-                <button type="submit" id="submitBtn"
-                    class="w-full bg-ctb-dark-green hover:bg-[#228224] text-white font-extrabold py-5 px-8 rounded-xl shadow-lg transition duration-300 transform hover:-translate-y-1 hover:shadow-2xl text-xl flex items-center justify-center tracking-wide group">
-                    <i class="fas fa-check-circle mr-3 group-hover:scale-110 transition-transform"></i> FINALIZAR CADASTRO
-                </button>
+            <!-- Ranking e Rating -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-bold text-ctbNavy mb-2"><i class="fa-solid fa-trophy mr-2 text-ctbGreenDark"></i>Ranking</label>
+                    <input type="text" name="ranking" id="ranking" maxlength="50" placeholder="Ex: 1º Baiano" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-ctbGreenDark focus:border-transparent outline-none transition-all shadow-sm bg-gray-50">
+                    <p class="text-xs text-gray-400 mt-1">Máx. 50 caracteres</p>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-ctbNavy mb-2"><i class="fa-solid fa-star mr-2 text-ctbGreenDark"></i>Rating</label>
+                    <input type="text" name="rating" id="rating" maxlength="50" placeholder="Ex: Classe A" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-ctbGreenDark focus:border-transparent outline-none transition-all shadow-sm bg-gray-50">
+                    <p class="text-xs text-gray-400 mt-1">Máx. 50 caracteres</p>
+                </div>
             </div>
-            
+
+            <!-- Mensagem de Status -->
+            <div id="statusMessage" class="hidden text-center font-bold p-3 rounded-lg mt-4"></div>
+
+            <!-- Botão Enviar -->
+            <button type="submit" id="btnSubmit" class="w-full bg-ctbGreenDark hover:bg-ctbNavy text-white font-extrabold text-lg py-4 rounded-xl shadow-lg transform transition-all duration-300 hover:-translate-y-1 mt-4">
+                <i class="fa-solid fa-paper-plane mr-2"></i> Enviar Cadastro
+            </button>
         </form>
     </div>
 
-    <!-- Rodapé -->
-    <p class="text-gray-300 mt-6 text-sm text-center font-medium animate-fade-in" style="animation-delay: 0.3s;">
-        © 2026 Clube dos Tenistas da Bahia. Todos os direitos reservados.
-    </p>
-
     <script>
-        function setupCharacterCount(inputId, countId) {
-            const input = document.getElementById(inputId);
-            const counter = document.getElementById(countId);
-            input.addEventListener('input', function() {
-                counter.textContent = this.value.length;
-                if(this.value.length === 50) counter.classList.add('text-red-500', 'font-bold');
-                else counter.classList.remove('text-red-500', 'font-bold');
-            });
-        }
-        setupCharacterCount('ranking', 'rankingCount');
-        setupCharacterCount('rating', 'ratingCount');
+        const form = document.getElementById('cadastroForm');
+        const statusMessage = document.getElementById('statusMessage');
+        const btnSubmit = document.getElementById('btnSubmit');
 
-        document.getElementById('telefone').addEventListener('input', function (e) {
-            let val = e.target.value.replace(/\D/g, '');
-            let formatted = val;
-            if (val.length > 0) {
-                formatted = '(' + val.substring(0, 2);
-                if (val.length > 2) formatted += ') ' + val.substring(2, 7);
-                if (val.length > 7) formatted += '-' + val.substring(7, 11);
-            }
-            e.target.value = formatted;
-        });
+        // SUBSTITUA ESTE LINK PELO SEU DO GOOGLE APPS SCRIPT
+        const GOOGLE_SCRIPT_URL = 'COLE_A_URL_DO_SCRIPT_AQUI';
 
-        document.getElementById('nascimento').addEventListener('input', function (e) {
-            let val = e.target.value.replace(/\D/g, '');
-            if (val.length >= 2) val = val.substring(0, 2) + '/' + val.substring(2, 4);
-            e.target.value = val;
-        });
-
-        const textInputs = ['nome', 'email', 'telefone', 'nascimento', 'ranking', 'rating'];
-        const radioInputs = ['Tamanho_Camisa', 'Modalidade'];
-
-        function saveDraft() {
-            textInputs.forEach(id => {
-                const el = document.getElementById(id);
-                if (el) localStorage.setItem('ctbDraft_' + id, el.value);
-            });
-            radioInputs.forEach(name => {
-                const checkedEl = document.querySelector(`input[name="${name}"]:checked`);
-                if (checkedEl) localStorage.setItem('ctbDraft_' + name, checkedEl.value);
-            });
-        }
-
-        function loadDraft() {
-            textInputs.forEach(id => {
-                const savedValue = localStorage.getItem('ctbDraft_' + id);
-                if (savedValue) {
-                    const el = document.getElementById(id);
-                    el.value = savedValue;
-                    el.dispatchEvent(new Event('input')); 
-                }
-            });
-            radioInputs.forEach(name => {
-                const savedValue = localStorage.getItem('ctbDraft_' + name);
-                if (savedValue) {
-                    const el = document.querySelector(`input[name="${name}"][value="${savedValue}"]`);
-                    if (el) el.checked = true;
-                }
-            });
-        }
-
-        function clearDraft() {
-            textInputs.forEach(id => localStorage.removeItem('ctbDraft_' + id));
-            radioInputs.forEach(name => localStorage.removeItem('ctbDraft_' + name));
-        }
-
-        document.getElementById('cadastroForm').addEventListener('input', saveDraft);
-        document.getElementById('cadastroForm').addEventListener('change', saveDraft);
-        window.addEventListener('DOMContentLoaded', loadDraft);
-
-        // NOVA LÓGICA DE ENVIO POR E-MAIL (FORMSUBMIT)
-        function handleFormSubmit(event) {
-            event.preventDefault();
-
-            const btn = document.getElementById('submitBtn');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-3"></i> Enviando...';
-            btn.disabled = true;
-            btn.classList.add('opacity-75', 'cursor-not-allowed', 'scale-95');
-
-            const form = document.getElementById('cadastroForm');
+        // 1. Salvar os dados automaticamente no celular (Local Storage)
+        form.addEventListener('input', function() {
             const formData = new FormData(form);
-            const nome = formData.get('Nome');
+            const dataObj = Object.fromEntries(formData.entries());
+            localStorage.setItem('cadastroCTB', JSON.stringify(dataObj));
+        });
+
+        // 2. Restaurar os dados ao abrir o aplicativo novamente
+        window.addEventListener('load', function() {
+            const savedData = localStorage.getItem('cadastroCTB');
+            if(savedData) {
+                const dataObj = JSON.parse(savedData);
+                for (const key in dataObj) {
+                    const field = form.elements[key];
+                    if (field) {
+                        if (field.type === 'radio') {
+                            const radioBtn = document.querySelector(`input[name="${key}"][value="${dataObj[key]}"]`);
+                            if(radioBtn) radioBtn.checked = true;
+                        } else {
+                            field.value = dataObj[key];
+                        }
+                    }
+                }
+            }
+        });
+
+        // 3. Enviar para a Planilha do Google
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
             
-            // Substitua pfeira@gmail.com pelo e-mail desejado, se necessário
-            fetch("https://formsubmit.co/ajax/pfeira@gmail.com", {
-                method: "POST",
-                headers: { 
-                    'Accept': 'application/json'
-                },
-                body: formData
+            // Verifica se você já trocou a URL do script
+            if(GOOGLE_SCRIPT_URL === 'COLE_A_URL_DO_SCRIPT_AQUI') {
+                alert('Atenção: Você precisa colar a URL do seu Google Script no código antes de enviar.');
+                return;
+            }
+
+            // Altera o visual do botão para Loading
+            btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Enviando...';
+            btnSubmit.disabled = true;
+            btnSubmit.classList.add('opacity-75', 'cursor-not-allowed');
+            statusMessage.classList.add('hidden');
+
+            const formData = new FormData(form);
+
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                body: formData,
+                mode: 'no-cors' // Necessário para evitar bloqueio de segurança do Google
             })
-            .then(response => response.json())
-            .then(data => {
+            .then(() => {
+                // Sucesso
+                statusMessage.textContent = 'Cadastro enviado com sucesso!';
+                statusMessage.classList.remove('hidden', 'bg-red-100', 'text-red-700');
+                statusMessage.classList.add('bg-green-100', 'text-green-700');
+                
+                // Limpa o formulário e o salvamento local
                 form.reset();
-                clearDraft();
-                
-                document.getElementById('rankingCount').textContent = '0';
-                document.getElementById('ratingCount').textContent = '0';
-
-                const msgBox = document.getElementById('messageBox');
-                msgBox.innerHTML = `<div class="flex flex-col items-center"><i class="fas fa-check-circle text-4xl mb-3"></i><span class="text-xl">Cadastro realizado com sucesso!</span><span class="text-md font-normal mt-1">Bem-vindo(a) ao clube, <strong>${nome.split(' ')[0]}</strong>!</span></div>`;
-                msgBox.className = 'mx-8 mt-6 p-6 rounded-2xl text-center font-bold shadow-lg bg-ctb-light-green/20 text-ctb-dark-green border-2 border-ctb-dark-green animate-slide-up block';
-                
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-                btn.classList.remove('opacity-75', 'cursor-not-allowed', 'scale-95');
-
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-
-                setTimeout(() => {
-                    msgBox.classList.add('hidden');
-                    msgBox.classList.remove('block', 'animate-slide-up');
-                }, 6000);
+                localStorage.removeItem('cadastroCTB');
             })
-            .catch(error => {
-                const msgBox = document.getElementById('messageBox');
-                msgBox.innerHTML = `<div class="flex flex-col items-center"><i class="fas fa-exclamation-triangle text-4xl mb-3"></i><span class="text-xl">Erro ao enviar!</span><span class="text-md font-normal mt-1">Por favor, tente novamente.</span></div>`;
-                msgBox.className = 'mx-8 mt-6 p-6 rounded-2xl text-center font-bold shadow-lg bg-red-100 text-red-700 border-2 border-red-500 animate-slide-up block';
-                
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-                btn.classList.remove('opacity-75', 'cursor-not-allowed', 'scale-95');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+            .catch((error) => {
+                // Erro
+                statusMessage.innerHTML = '<i class="fa-solid fa-circle-exclamation mr-1"></i> Erro ao enviar. Tente novamente.';
+                statusMessage.classList.remove('hidden', 'bg-green-100', 'text-green-700');
+                statusMessage.classList.add('bg-red-100', 'text-red-700');
+            })
+            .finally(() => {
+                // Restaura o botão
+                btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane mr-2"></i> Enviar Cadastro';
+                btnSubmit.disabled = false;
+                btnSubmit.classList.remove('opacity-75', 'cursor-not-allowed');
             });
-        }
+        });
     </script>
 </body>
 </html>
